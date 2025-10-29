@@ -38,6 +38,12 @@ jobs:
         with:
           go-version: "1.21"
 
+      - name: Verify Go installation
+        run: |
+          echo "🔍 Verifying Go installation..."
+          go version
+          echo "✅ Go is ready"
+
       - name: Enable Corepack
         run: corepack enable
 
