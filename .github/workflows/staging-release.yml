@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.14.0]
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21'
+          go-version: "1.21"
 
       - name: Enable Corepack
         run: corepack enable
@@ -141,9 +141,9 @@ jobs:
             staging-build-info.json
           body: |
             ## Staging Release ${{ steps.version.outputs.version }}
-            
+
             This is an automated staging release with build artifacts.
-            
+
             ### Build Information
             - **Version:** ${{ steps.version.outputs.version }}
             - **Build Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -151,111 +151,28 @@ jobs:
             - **Branch:** staging
             - **Node.js Version:** ${{ matrix.node-version }}
             - **Workflow Run:** ${{ github.event.workflow_run.id }}
-            
+
             ### Artifacts
             - `react-app-staging-${{ steps.version.outputs.version }}.tar.gz` - Compressed build (tar.gz)
             - `react-app-staging-${{ steps.version.outputs.version }}.zip` - Compressed build (zip)
             - `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe` - **Standalone Windows executable** 🚀
             - `staging-build-info.json` - Build metadata
-            
+
             ### Testing Options
-            
+
             **Option 1: Standalone Executable (Recommended for Testing)**
             - Download `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe`
             - Run the executable to start the web server on port 8080
             - Access the application at `http://localhost:8080`
             - Perfect for local testing!
-            
+
             **Option 2: Traditional Web Server**
             - Extract the tar.gz or zip archive
             - Serve the contents from any web server
-            
+
             ⚠️ **This is a pre-release** - Not intended for production use.
-            
+
             ### Testing
             Please test this build in the staging environment before promoting to production.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # Optional: Deploy to staging environment
-  deploy-to-staging:
-    name: Deploy to Staging Environment
-    runs-on: ubuntu-latest
-    needs: build-and-deploy-staging
-    if: ${{ vars.DEPLOY_TO_STAGING == 'true' }}
-    environment:
-      name: staging
-      url: ${{ vars.STAGING_URL }}
-    
-    steps:
-      - name: Download staging artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: staging-build-${{ needs.build-and-deploy-staging.outputs.version }}
-
-      - name: Deploy to staging S3 bucket
-        if: ${{ vars.STAGING_S3_BUCKET }}
-        run: |
-          # Configure AWS credentials for staging
-          aws configure set aws_access_key_id ${{ secrets.STAGING_AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.STAGING_AWS_SECRET_ACCESS_KEY }}
-          aws configure set region ${{ vars.STAGING_AWS_REGION || 'us-east-1' }}
-          
-          # Deploy to staging S3 bucket
-          aws s3 sync build/ s3://${{ vars.STAGING_S3_BUCKET }}/ --delete
-          echo "Deployed to staging S3 bucket: ${{ vars.STAGING_S3_BUCKET }}"
-
-      - name: Invalidate staging CloudFront
-        if: ${{ vars.STAGING_CLOUDFRONT_DISTRIBUTION_ID }}
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ vars.STAGING_CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"
-
-      - name: Notify deployment completion
-        run: |
-          echo "Staging deployment completed successfully!"
-          echo "Staging URL: ${{ vars.STAGING_URL }}"
-          
-  # Optional: Run end-to-end tests against staging
-  e2e-tests:
-    name: End-to-End Tests
-    runs-on: ubuntu-latest
-    needs: deploy-to-staging
-    if: ${{ vars.RUN_E2E_TESTS == 'true' }}
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 22.14.0
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22.14.0
-
-      - name: Install E2E test dependencies
-        run: |
-          if [ -f "e2e/package.json" ]; then
-            cd e2e && yarn install --immutable
-          elif [ -f "cypress.config.js" ]; then
-            yarn add --dev cypress
-          elif [ -f "playwright.config.js" ]; then
-            yarn add --dev @playwright/test
-          else
-            echo "No E2E test framework detected, skipping tests"
-            exit 0
-          fi
-
-      - name: Run E2E tests
-        run: |
-          export STAGING_URL="${{ vars.STAGING_URL }}"
-          if [ -f "cypress.config.js" ]; then
-            yarn cypress run --config baseUrl=$STAGING_URL
-          elif [ -f "playwright.config.js" ]; then
-            yarn playwright test --config playwright.config.js
-          else
-            echo "No E2E tests configured"
-          fi
-        env:
-          CYPRESS_baseUrl: ${{ vars.STAGING_URL }}
-          PLAYWRIGHT_BASE_URL: ${{ vars.STAGING_URL }}
