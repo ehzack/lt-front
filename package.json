@@ -1,0 +1,94 @@
+{
+  "name": "lt-frontend",
+  "description": "Lumières et Technologie - Industrial Control and Monitoring System Frontend. A comprehensive React application for managing lighting systems, electrical equipment, alarms, and automation controls. Developed by Team ADS.",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Team ADS",
+  "dependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@babel/preset-react": "^7.24.6",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.1",
+    "@mui/styles": "^5.10.10",
+    "@mui/x-data-grid": "^5.17.13",
+    "axios": "^0.27.2",
+    "babel-loader": "8.1.0",
+    "chart.js": "^3.9.1",
+    "crypto-browserify": "^3.12.0",
+    "css-loader": "^7.1.2",
+    "formik": "^2.2.9",
+    "html-webpack-plugin": "^5.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-awesome-reveal": "^4.1.0",
+    "react-chartjs-2": "^4.3.1",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "react-select": "^5.7.0",
+    "react-use-websocket": "^3.0.0",
+    "react-uuid": "^2.0.0",
+    "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-saga": "^1.1.3",
+    "socket.io": "^4.5.3",
+    "socket.io-client": "^4.5.3",
+    "sockjs-client": "^1.5.1",
+    "stream-browserify": "^3.0.0",
+    "style-loader": "^4.0.0",
+    "url-loader": "^4.1.1",
+    "vm-browserify": "^1.1.2",
+    "web-vitals": "^2.1.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "websocket": "^1.0.34",
+    "yup": "^0.32.11"
+  },
+  "scripts": {
+    "start": "react-scripts --openssl-legacy-provider start ",
+    "start-webpack": "webpack serve --mode development --open",
+    "build-webpack": "webpack --mode production",
+    "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts build",
+    "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts --openssl-legacy-provider build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
+    "file-loader": "^6.2.0",
+    "react-router-dom": "^5.3.4"
+  },
+  "browser": {
+    "crypto": false
+  },
+  "engines": {
+    "npm": ">=10.2.4",
+    "node": ">=20.0.0"
+  }
+}

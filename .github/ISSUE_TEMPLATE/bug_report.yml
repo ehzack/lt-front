@@ -1,0 +1,146 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve
+title: "[BUG]: "
+labels: ["bug", "triage"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us, what did you expect to happen?
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected?
+      options:
+        - Authentication
+        - UI Components
+        - Dashboard
+        - Navigation/Routing
+        - State Management (Redux)
+        - WebSocket Connection
+        - API Integration
+        - Alarm System
+        - User Interface
+        - Charts/Visualizations
+        - Forms
+        - Material-UI Theme
+        - Real-time Updates
+        - Build/Deployment
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is this bug?
+      options:
+        - Critical (Application unusable)
+        - High (Major feature broken)
+        - Medium (Feature impacted)
+        - Low (Minor UI issue)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      description: Which browser are you using?
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Opera
+        - Mobile Safari
+        - Chrome Mobile
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Please provide detailed steps to reproduce the issue
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Please provide your environment details
+      placeholder: |
+        - OS: [e.g. Windows 10, macOS, Ubuntu 20.04]
+        - Browser: [e.g. Chrome 96.0.4664.110]
+        - Node.js Version: [e.g. 20.0.0]
+        - App Version: [e.g. v1.2.0]
+        - Screen Resolution: [e.g. 1920x1080]
+      render: markdown
+
+  - type: textarea
+    id: console-logs
+    attributes:
+      label: Browser Console Output
+      description: Please copy and paste any relevant console errors
+      render: shell
+
+  - type: textarea
+    id: network
+    attributes:
+      label: Network Issues
+      description: Any relevant network errors from browser dev tools?
+      render: shell
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here (screenshots, screen recordings, etc.)
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

@@ -1,0 +1,151 @@
+name: 🚀 Feature Request
+description: Suggest an idea for this project
+title: "[FEATURE]: "
+labels: ["enhancement", "feature-request"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new feature! Please fill out the sections below.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like
+      placeholder: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component would this feature affect?
+      options:
+        - Authentication
+        - UI Components
+        - Dashboard
+        - Navigation/Routing
+        - State Management (Redux)
+        - WebSocket Connection
+        - API Integration
+        - Alarm System
+        - User Interface
+        - Charts/Visualizations
+        - Forms
+        - Material-UI Theme
+        - Real-time Updates
+        - Mobile Responsiveness
+        - Accessibility
+        - Performance
+        - Build/Deployment
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - High (Critical for project success)
+        - Medium (Important but not blocking)
+        - Low (Nice to have)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: user-type
+    attributes:
+      label: User Type
+      description: Which type of user would benefit from this feature?
+      options:
+        - Admin Users
+        - Maintenance Users
+        - Supervision Users
+        - All Users
+        - Developers
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      placeholder: A clear and concise description of any alternative solutions or features you've considered.
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Benefits
+      description: What benefits would this feature provide?
+      placeholder: |
+        - Improved user experience
+        - Better performance
+        - Enhanced security
+        - Increased accessibility
+        - Better mobile experience
+        - etc.
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Ideas
+      description: Do you have any ideas on how this could be implemented?
+      placeholder: |
+        Technical implementation details, if you have any ideas:
+        - New React components needed
+        - Redux state changes
+        - API endpoints required
+        - UI/UX considerations
+        - etc.
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: What conditions must be met for this feature to be considered complete?
+      placeholder: |
+        - [ ] Feature X works as expected
+        - [ ] Unit tests are written and passing
+        - [ ] UI is responsive on mobile devices
+        - [ ] Accessibility standards are met
+        - [ ] Documentation is updated
+        - [ ] User roles and permissions are handled correctly
+        - [ ] etc.
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups/Wireframes
+      description: Do you have any visual mockups or wireframes? (attach images or provide links)
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or examples about the feature request here
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

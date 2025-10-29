@@ -1,0 +1,99 @@
+name: ❓ Question
+description: Ask a question about the project
+title: "[QUESTION]: "
+labels: ["question"]
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for your question! Please provide as much detail as possible.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Please describe your question in detail
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: What category does your question relate to?
+      options:
+        - Installation & Setup
+        - Configuration
+        - React Development
+        - Redux State Management
+        - Material-UI Usage
+        - API Integration
+        - WebSocket Connection
+        - Authentication
+        - User Roles & Permissions
+        - Routing & Navigation
+        - Charts & Visualizations
+        - Real-time Features
+        - Mobile Responsiveness
+        - Browser Compatibility
+        - Performance
+        - Build & Deployment
+        - Troubleshooting
+        - Best Practices
+        - Development Workflow
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Please provide any relevant context
+      placeholder: |
+        - What are you trying to achieve?
+        - What have you already tried?
+        - Browser and OS details
+        - Relevant code snippets
+        - Error messages (if any)
+
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried?
+      description: Have you tried anything to solve this yourself?
+      placeholder: |
+        - Searched the documentation
+        - Looked through existing issues
+        - Checked browser console for errors
+        - Tried specific solutions
+        - Consulted React/Redux documentation
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Details
+      description: Please provide your environment details (if relevant)
+      placeholder: |
+        - OS: [e.g. Windows 10, macOS, Ubuntu 20.04]
+        - Browser: [e.g. Chrome 96.0.4664.110]
+        - Node.js Version: [e.g. 20.0.0]
+        - App Version: [e.g. v1.2.0]
+      render: markdown
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Please confirm you've done the following
+      options:
+        - label: I have searched existing issues and discussions
+          required: true
+        - label: I have read the documentation
+          required: true
+        - label: I agree to follow this project's Code of Conduct
+          required: true
