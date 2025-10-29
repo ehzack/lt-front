@@ -57,6 +57,7 @@
     "start-webpack": "webpack serve --mode development --open",
     "build-webpack": "webpack --mode production",
     "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts build",
+    "build:exe": "npm exec --yes pkg@5.8.1 .",
     "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -83,6 +84,19 @@
     "copy-webpack-plugin": "^12.0.2",
     "file-loader": "^6.2.0",
     "react-router-dom": "^5.3.4"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "scripts": [
+      "server.js"
+    ],
+    "assets": [
+      "build/**/*"
+    ],
+    "targets": [
+      "node20-win-x64"
+    ],
+    "outputPath": "dist"
   },
   "browser": {
     "crypto": false

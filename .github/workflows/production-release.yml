@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22.14.0]
+        node-version: [20.18.0]
     
     steps:
       - name: Checkout repository
@@ -68,6 +68,12 @@ jobs:
           REACT_APP_VERSION: ${{ steps.version.outputs.version }}
           REACT_APP_ENVIRONMENT: production
 
+      - name: Package Windows executable
+        run: yarn build:exe
+
+      - name: Add version to executable filename
+        run: mv dist/lt-frontend.exe dist/lt-frontend-${{ steps.version.outputs.version }}.exe
+
       - name: Create production build archive
         run: |
           cd build
@@ -97,6 +103,7 @@ jobs:
             react-app-production-${{ steps.version.outputs.version }}.tar.gz
             react-app-production-${{ steps.version.outputs.version }}.zip
             build-info.json
+            dist/lt-frontend-${{ steps.version.outputs.version }}.exe
           retention-days: 90
 
       - name: Create GitHub Release
@@ -110,6 +117,7 @@ jobs:
             react-app-production-${{ steps.version.outputs.version }}.tar.gz
             react-app-production-${{ steps.version.outputs.version }}.zip
             build-info.json
+            dist/lt-frontend-${{ steps.version.outputs.version }}.exe
           body: |
             ## Production Release ${{ steps.version.outputs.version }}
             
@@ -123,9 +131,10 @@ jobs:
             - `react-app-production-${{ steps.version.outputs.version }}.tar.gz` - Compressed build (tar.gz)
             - `react-app-production-${{ steps.version.outputs.version }}.zip` - Compressed build (zip)
             - `build-info.json` - Build metadata
+            - `dist/lt-frontend-${{ steps.version.outputs.version }}.exe` - Self-contained Windows executable with embedded web server
             
             ### Deployment
-            This build is ready for production deployment. Extract the archive and serve the contents from a web server.
+            This build is ready for production deployment. You can either extract the archive and serve the contents from a web server or run the Windows executable to serve the UI locally on `http://localhost:80`.
             
             ### Changes
             See the [CHANGELOG.md](./CHANGELOG.md) for detailed changes in this release.
