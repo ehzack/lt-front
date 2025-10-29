@@ -28,6 +28,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -68,6 +73,16 @@ jobs:
           REACT_APP_VERSION: ${{ steps.version.outputs.version }}
           REACT_APP_ENVIRONMENT: production
 
+      - name: Build Windows executable with embedded React app
+        run: |
+          echo "🔨 Building Windows executable with embedded React app..."
+          GOOS=windows GOARCH=amd64 go build \
+            -ldflags="-s -w -X main.version=${{ steps.version.outputs.version }}" \
+            -o lt-frontend-${{ steps.version.outputs.version }}-windows.exe server.go
+          echo "✅ Windows executable built: lt-frontend-${{ steps.version.outputs.version }}-windows.exe"
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
+
       - name: Create production build archive
         run: |
           cd build
@@ -96,6 +111,7 @@ jobs:
             build/
             react-app-production-${{ steps.version.outputs.version }}.tar.gz
             react-app-production-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}-windows.exe
             build-info.json
           retention-days: 90
 
@@ -109,6 +125,7 @@ jobs:
           files: |
             react-app-production-${{ steps.version.outputs.version }}.tar.gz
             react-app-production-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}-windows.exe
             build-info.json
           body: |
             ## Production Release ${{ steps.version.outputs.version }}
@@ -122,10 +139,20 @@ jobs:
             ### Artifacts
             - `react-app-production-${{ steps.version.outputs.version }}.tar.gz` - Compressed build (tar.gz)
             - `react-app-production-${{ steps.version.outputs.version }}.zip` - Compressed build (zip)
+            - `lt-frontend-${{ steps.version.outputs.version }}-windows.exe` - **Standalone Windows executable** 🚀
             - `build-info.json` - Build metadata
             
-            ### Deployment
-            This build is ready for production deployment. Extract the archive and serve the contents from a web server.
+            ### Deployment Options
+            
+            **Option 1: Standalone Executable (Recommended)**
+            - Download `lt-frontend-${{ steps.version.outputs.version }}-windows.exe`
+            - Run the executable to start the web server on port 8080
+            - Access the application at `http://localhost:8080`
+            - No additional server setup required!
+            
+            **Option 2: Traditional Web Server**
+            - Extract the tar.gz or zip archive
+            - Serve the contents from any web server (nginx, Apache, etc.)
             
             ### Changes
             See the [CHANGELOG.md](./CHANGELOG.md) for detailed changes in this release.

@@ -11,6 +11,12 @@
 # production
 /build
 
+# Go binaries
+lt-frontend
+lt-frontend.exe
+lt-frontend-*.exe
+*.exe
+
 # environment config (local overrides)
 # /src/common/Config.js
 

@@ -49,6 +49,8 @@
     "start-webpack": "webpack serve --mode development --open",
     "build-webpack": "webpack --mode production",
     "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts --openssl-legacy-provider build",
+    "build:go": "yarn build && go build -o lt-frontend server.go",
+    "build:windows": "yarn build && set GOOS=windows&& set GOARCH=amd64&& go build -o lt-frontend-windows.exe server.go",
     "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

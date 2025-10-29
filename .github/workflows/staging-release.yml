@@ -33,6 +33,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.21'
+
       - name: Enable Corepack
         run: corepack enable
 
@@ -71,6 +76,16 @@ jobs:
           REACT_APP_VERSION: ${{ steps.version.outputs.version }}
           REACT_APP_ENVIRONMENT: staging
 
+      - name: Build Windows executable with embedded React app (staging)
+        run: |
+          echo "🔨 Building staging Windows executable with embedded React app..."
+          GOOS=windows GOARCH=amd64 go build \
+            -ldflags="-s -w -X main.version=${{ steps.version.outputs.version }}" \
+            -o lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe server.go
+          echo "✅ Staging Windows executable built: lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe"
+        env:
+          APP_VERSION: ${{ steps.version.outputs.version }}
+
       - name: Create staging build archive
         run: |
           cd build
@@ -100,6 +115,7 @@ jobs:
             build/
             react-app-staging-${{ steps.version.outputs.version }}.tar.gz
             react-app-staging-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe
             staging-build-info.json
           retention-days: 30
 
@@ -121,6 +137,7 @@ jobs:
           files: |
             react-app-staging-${{ steps.version.outputs.version }}.tar.gz
             react-app-staging-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe
             staging-build-info.json
           body: |
             ## Staging Release ${{ steps.version.outputs.version }}
@@ -138,10 +155,20 @@ jobs:
             ### Artifacts
             - `react-app-staging-${{ steps.version.outputs.version }}.tar.gz` - Compressed build (tar.gz)
             - `react-app-staging-${{ steps.version.outputs.version }}.zip` - Compressed build (zip)
+            - `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe` - **Standalone Windows executable** 🚀
             - `staging-build-info.json` - Build metadata
             
-            ### Deployment
-            This build is ready for staging environment deployment. Extract the archive and serve the contents from a web server.
+            ### Testing Options
+            
+            **Option 1: Standalone Executable (Recommended for Testing)**
+            - Download `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe`
+            - Run the executable to start the web server on port 8080
+            - Access the application at `http://localhost:8080`
+            - Perfect for local testing!
+            
+            **Option 2: Traditional Web Server**
+            - Extract the tar.gz or zip archive
+            - Serve the contents from any web server
             
             ⚠️ **This is a pre-release** - Not intended for production use.
             
