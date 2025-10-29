@@ -48,7 +48,7 @@
     "start": "react-scripts --openssl-legacy-provider start ",
     "start-webpack": "webpack serve --mode development --open",
     "build-webpack": "webpack --mode production",
-    "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts build",
+    "build": "cross-env REACT_APP_ENVIRONMENT=production react-scripts --openssl-legacy-provider build",
     "winBuild": "set \"GENERATE_SOURCEMAP=false\" && react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
