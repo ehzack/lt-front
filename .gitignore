@@ -11,8 +11,8 @@
 # production
 /build
 
-# envirement config
-/src/common/Config.js
+# environment config (local overrides)
+# /src/common/Config.js
 
 # misc
 .DS_Store
