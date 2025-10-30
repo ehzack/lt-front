@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/ehzack/lt-front/compare/v1.0.5...v1.1.0) (2025-10-30)
+
+
+### Bug Fixes
+
+* clean staging version 1.0.5-staging-1 → 1.0.5 ([4657b2d](https://github.com/ehzack/lt-front/commit/4657b2d243bc1c3e9c70afbae0a4e4962ed8200c))
+
+
+### Features
+
+* add auto-fix workflow for staging versions on master ([bd3fe2b](https://github.com/ehzack/lt-front/commit/bd3fe2b033bbe5ac1e129a0b53854fd94ff6f4ad))
+* merge staging version display widget to production ([#4](https://github.com/ehzack/lt-front/issues/4)) ([e93558d](https://github.com/ehzack/lt-front/commit/e93558d174f6ae018d8c82d2408ed1432149db53)), closes [#3](https://github.com/ehzack/lt-front/issues/3)
+
 ## [1.0.5](https://github.com/ehzack/lt-front/compare/v1.0.4...v1.0.5) (2025-10-30)
 
 
