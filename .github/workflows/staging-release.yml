@@ -128,7 +128,7 @@ jobs:
       - name: Find latest staging tag
         id: latest-tag
         run: |
-          LATEST_TAG=$(git tag -l "v*-staging.*" --sort=-version:refname | head -n1)
+          LATEST_TAG=$(git tag -l "v*-staging-*" --sort=-version:refname | head -n1)
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
           echo "Latest staging tag: $LATEST_TAG"
 
