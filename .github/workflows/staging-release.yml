@@ -141,9 +141,12 @@ jobs:
       - name: Find latest staging tag
         id: latest-tag
         run: |
-          LATEST_TAG=$(git tag -l "v*-staging-*" --sort=-version:refname | head -n1)
+          # Find the latest simplified staging tag that matches our current version
+          CURRENT_VERSION="${{ steps.version.outputs.version }}"
+          BASE_VERSION=$(echo "$CURRENT_VERSION" | sed 's/-staging-[0-9]\+$//')
+          LATEST_TAG=$(git tag -l "v${BASE_VERSION}-staging-[0-9]*" --sort=-version:refname | head -n1)
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
-          echo "Latest staging tag: $LATEST_TAG"
+          echo "Latest staging tag: $LATEST_TAG (base version: $BASE_VERSION)"
 
       - name: Update staging release with artifacts
         if: steps.latest-tag.outputs.tag != ''
