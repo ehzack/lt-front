@@ -23,7 +23,7 @@ This React application serves as the frontend for an industrial automation syste
 
 ## 🏗️ Architecture
 
-### Technology Stack
+### Technology Stacks
 
 - **Framework**: React 17.0.2 with Hooks and functional components
 - **State Management**: Redux 4.1.1 + Redux Saga 1.1.3
