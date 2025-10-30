@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/ehzack/lt-front/compare/v1.0.2...v1.0.3) (2025-10-30)
+
+
+### Bug Fixes
+
+* apply same zip naming and exe inclusion fixes to production workflow ([b054223](https://github.com/ehzack/lt-front/commit/b0542231773f0142633e6f2552f143946abd1cd8))
+
 ## [1.0.2](https://github.com/ehzack/lt-front/compare/v1.0.1...v1.0.2) (2025-10-30)
 
 
