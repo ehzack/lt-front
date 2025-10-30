@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - staging
-  pull_request:
-    branches:
-      - staging
 
 permissions:
   contents: write
@@ -20,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.14.0]
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -100,7 +97,7 @@ jobs:
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
       version: ${{ steps.tag.outputs.version }}
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -128,11 +125,11 @@ jobs:
         id: tag
         run: |
           CURRENT_VERSION="${{ steps.current-version.outputs.version }}"
-          
+
           # Get the latest staging tag number (only match our new simplified format)
           LATEST_STAGING_TAG=$(git tag -l "v${CURRENT_VERSION}-staging-[0-9]*" --sort=-version:refname | head -n1 || echo "")
           echo "Debug: Found latest staging tag: '$LATEST_STAGING_TAG'"
-          
+
           if [ -z "$LATEST_STAGING_TAG" ]; then
             # No previous staging tags found, start with 1
             STAGING_NUMBER=1
@@ -149,10 +146,10 @@ jobs:
               echo "Debug: Incremented staging number to: $STAGING_NUMBER"
             fi
           fi
-          
+
           STAGING_VERSION="${CURRENT_VERSION}-staging-${STAGING_NUMBER}"
           STAGING_TAG="v${STAGING_VERSION}"
-          
+
           echo "version=$STAGING_VERSION" >> $GITHUB_OUTPUT
           echo "tag=$STAGING_TAG" >> $GITHUB_OUTPUT
           echo "Generated staging version: $STAGING_VERSION (number: $STAGING_NUMBER)"
@@ -186,18 +183,18 @@ jobs:
           prerelease: true
           body: |
             ## Staging Release ${{ steps.tag.outputs.version }}
-            
+
             This is an automated staging release created from the `staging` branch.
-            
+
             ### Build Information
             - **Version:** ${{ steps.tag.outputs.version }}
             - **Branch:** staging
             - **Commit:** ${{ github.sha }}
             - **Build Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)
-            
+
             ### Purpose
             This release is intended for staging environment testing and validation.
-            
+
             ⚠️ **This is a pre-release** - Not intended for production use.
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
