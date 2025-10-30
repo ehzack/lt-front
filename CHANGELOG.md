@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/ehzack/lt-front/compare/v1.0.0...v1.0.1) (2025-10-30)
+
+
+### Bug Fixes
+
+* correct zip naming and include Windows exe in zip archives ([bd38153](https://github.com/ehzack/lt-front/commit/bd3815354c46b0366bce1a4f8f08187c934ac647))
+* reset package.json to clean 1.0.0 and merge updated staging-release workflow ([8ba6a87](https://github.com/ehzack/lt-front/commit/8ba6a872dd312fe3d5e28b2f331d96cab597d398))
+
 # 1.0.0 (2025-10-30)
 
 
