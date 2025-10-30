@@ -74,6 +74,9 @@
     ]
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.0",
     "babel-loader": "8.1.0",
     "copy-webpack-plugin": "^12.0.2",
     "cross-env": "^7.0.3",
@@ -81,6 +84,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.6.0",
     "react-router-dom": "^5.3.4",
+    "semantic-release": "^25.0.1",
     "style-loader": "^4.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.91.0",
@@ -93,5 +97,6 @@
   "engines": {
     "npm": ">=10.2.4",
     "node": ">=20.0.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
