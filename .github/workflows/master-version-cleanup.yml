@@ -1,0 +1,90 @@
+name: Master Version Cleanup
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup-version:
+    name: Clean Staging Versions from Master
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'master')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - name: Check and fix package.json version
+        id: version-check
+        run: |
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Check if version contains staging suffix
+          if [[ "$CURRENT_VERSION" == *"-staging-"* ]]; then
+            echo "Found staging version in master branch: $CURRENT_VERSION"
+            
+            # Extract base version (remove everything from -staging onwards)
+            CLEAN_VERSION=$(echo "$CURRENT_VERSION" | sed 's/-staging-.*//')
+            echo "Cleaning to: $CLEAN_VERSION"
+            
+            # Update package.json with clean version
+            node -e "
+              const pkg = require('./package.json');
+              pkg.version = '$CLEAN_VERSION';
+              require('fs').writeFileSync('./package.json', JSON.stringify(pkg, null, 2) + '\n');
+            "
+            
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+            echo "clean_version=$CLEAN_VERSION" >> $GITHUB_OUTPUT
+            echo "original_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "Version is already clean: $CURRENT_VERSION"
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit cleaned version
+        if: steps.version-check.outputs.version_changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          git add package.json
+          git commit -m "fix: clean staging version ${{ steps.version-check.outputs.original_version }} → ${{ steps.version-check.outputs.clean_version }}
+
+          Auto-cleanup of staging version that was merged from staging branch.
+          
+          🤖 Generated with [Claude Code](https://claude.ai/code)
+          
+          Co-Authored-By: Claude <noreply@anthropic.com>"
+          
+          git push origin master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Log completion
+        run: |
+          if [[ "${{ steps.version-check.outputs.version_changed }}" == "true" ]]; then
+            echo "✅ Successfully cleaned staging version from master branch"
+            echo "   Original: ${{ steps.version-check.outputs.original_version }}"
+            echo "   Cleaned:  ${{ steps.version-check.outputs.clean_version }}"
+          else
+            echo "✅ No version cleanup needed - version is already clean"
+          fi
