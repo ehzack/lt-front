@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/ehzack/lt-front/compare/v1.0.4...v1.0.5) (2025-10-30)
+
+
+### Bug Fixes
+
+* remove GitHub plugin from semantic-release and handle tag collisions ([c90b930](https://github.com/ehzack/lt-front/commit/c90b9306acdacf6544eef07a6b28226a9c7b4d69))
+
 ## [1.0.4](https://github.com/ehzack/lt-front/compare/v1.0.3...v1.0.4) (2025-10-30)
 
 
