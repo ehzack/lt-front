@@ -1,7 +1,7 @@
 {
   "name": "lt-frontend",
   "description": "Lumières et Technologie - Industrial Control and Monitoring System Frontend. A comprehensive React application for managing lighting systems, electrical equipment, alarms, and automation controls. Developed by Team ADS.",
-  "version": "1.0.0-staging.20251029211512.6cbab82-staging.20251029214145.3f999b3-staging.20251029215632.896c486-staging.20251029221559.f24a9f3-staging.20251030013046.1789ebf-staging.20251030132820.f21fd4b-staging.20251030134056.f4ca805",
+  "version": "1.0.0-staging.20251029211512.6cbab82-staging.20251029214145.3f999b3-staging.20251029215632.896c486-staging.20251029221559.f24a9f3-staging.20251030013046.1789ebf-staging.20251030132820.f21fd4b-staging.20251030134056.f4ca805-staging-1",
   "private": true,
   "author": "Team ADS",
   "dependencies": {
