@@ -434,6 +434,10 @@ function App() {
             </Snackbar>
           </Box>
           {loadingProps?.isLoading ? <Spinner /> : <></>}
+          {/* Development feature: Version display for testing workflow */}
+          <div style={{position: 'fixed', bottom: '10px', right: '10px', background: '#f0f0f0', padding: '5px', fontSize: '12px', borderRadius: '3px'}}>
+            Dev Feature: v1.0.5+dev
+          </div>
           {routes}
         </div>
       )}
