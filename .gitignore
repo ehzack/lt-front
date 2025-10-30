@@ -11,8 +11,14 @@
 # production
 /build
 
-# envirement config
-/src/common/Config.js
+# Go binaries
+lt-frontend
+lt-frontend.exe
+lt-frontend-*.exe
+*.exe
+
+# environment config (local overrides)
+# /src/common/Config.js
 
 # misc
 .DS_Store
