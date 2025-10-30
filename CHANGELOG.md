@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/ehzack/lt-front/compare/v1.0.3...v1.0.4) (2025-10-30)
+
+
+### Bug Fixes
+
+* configure semantic-release to trigger production-release workflow ([9d35d88](https://github.com/ehzack/lt-front/commit/9d35d887763bc1a51c8c6af01fe9454e62729360))
+
 ## [1.0.3](https://github.com/ehzack/lt-front/compare/v1.0.2...v1.0.3) (2025-10-30)
 
 
