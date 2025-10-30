@@ -168,8 +168,8 @@ jobs:
 
             **Option 1: Standalone Executable (Recommended for Testing)**
             - Download `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe`
-            - Run the executable to start the web server on port 8080
-            - Access the application at `http://localhost:8080`
+            - Run the executable to start the web server on port 80
+            - Access the application at `http://localhost` (or set PORT env variable)
             - Perfect for local testing!
 
             **Option 2: Traditional Web Server**
