@@ -94,10 +94,23 @@ jobs:
 
       - name: Create staging build archive
         run: |
-          cd build
-          tar -czf ../react-app-staging-${{ steps.version.outputs.version }}.tar.gz *
-          cd ..
-          zip -r react-app-staging-${{ steps.version.outputs.version }}.zip build/
+          # Create directory for complete package
+          mkdir -p lt-frontend-${{ steps.version.outputs.version }}
+          
+          # Copy React build files
+          cp -r build/* lt-frontend-${{ steps.version.outputs.version }}/
+          
+          # Copy Windows executable to the package
+          cp lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe lt-frontend-${{ steps.version.outputs.version }}/
+          
+          # Create tar.gz archive
+          tar -czf lt-frontend-${{ steps.version.outputs.version }}.tar.gz lt-frontend-${{ steps.version.outputs.version }}/
+          
+          # Create zip archive
+          zip -r lt-frontend-${{ steps.version.outputs.version }}.zip lt-frontend-${{ steps.version.outputs.version }}/
+          
+          # Clean up temporary directory
+          rm -rf lt-frontend-${{ steps.version.outputs.version }}/
 
       - name: Generate staging build info
         run: |
@@ -119,8 +132,8 @@ jobs:
           name: staging-build-${{ steps.version.outputs.version }}
           path: |
             build/
-            react-app-staging-${{ steps.version.outputs.version }}.tar.gz
-            react-app-staging-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}.tar.gz
+            lt-frontend-${{ steps.version.outputs.version }}.zip
             lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe
             staging-build-info.json
           retention-days: 30
@@ -141,8 +154,8 @@ jobs:
           draft: false
           prerelease: true
           files: |
-            react-app-staging-${{ steps.version.outputs.version }}.tar.gz
-            react-app-staging-${{ steps.version.outputs.version }}.zip
+            lt-frontend-${{ steps.version.outputs.version }}.tar.gz
+            lt-frontend-${{ steps.version.outputs.version }}.zip
             lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe
             staging-build-info.json
           body: |
@@ -159,8 +172,8 @@ jobs:
             - **Workflow Run:** ${{ github.event.workflow_run.id }}
 
             ### Artifacts
-            - `react-app-staging-${{ steps.version.outputs.version }}.tar.gz` - Compressed build (tar.gz)
-            - `react-app-staging-${{ steps.version.outputs.version }}.zip` - Compressed build (zip)
+            - `lt-frontend-${{ steps.version.outputs.version }}.tar.gz` - **Complete package (tar.gz)** with React build + Windows executable
+            - `lt-frontend-${{ steps.version.outputs.version }}.zip` - **Complete package (zip)** with React build + Windows executable  
             - `lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe` - **Standalone Windows executable** 🚀
             - `staging-build-info.json` - Build metadata
 
@@ -172,9 +185,10 @@ jobs:
             - Access the application at `http://localhost` (or set PORT env variable)
             - Perfect for local testing!
 
-            **Option 2: Traditional Web Server**
-            - Extract the tar.gz or zip archive
-            - Serve the contents from any web server
+            **Option 2: Complete Package**
+            - Extract `lt-frontend-${{ steps.version.outputs.version }}.zip` or `lt-frontend-${{ steps.version.outputs.version }}.tar.gz`
+            - Contains both React build files AND the Windows executable
+            - Serve the React files from any web server OR run the included executable
 
             ⚠️ **This is a pre-release** - Not intended for production use.
 
