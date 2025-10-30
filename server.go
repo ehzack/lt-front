@@ -77,6 +77,7 @@ func main() {
 	log.Printf("📱 React App: Lumières et Technologie - Industrial Control System")
 	log.Printf("🔧 Version: %s", getVersion())
 	log.Printf("⚡ Health Check: http://localhost%s/health", addr)
+	log.Printf("🌐 Default Port: %s (set PORT env variable to override)", port)
 	
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal("Server failed to start:", err)
