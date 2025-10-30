@@ -96,19 +96,19 @@ jobs:
         run: |
           # Create directory for complete package
           mkdir -p lt-frontend-${{ steps.version.outputs.version }}
-          
+
           # Copy React build files
           cp -r build/* lt-frontend-${{ steps.version.outputs.version }}/
-          
+
           # Copy Windows executable to the package
           cp lt-frontend-${{ steps.version.outputs.version }}-staging-windows.exe lt-frontend-${{ steps.version.outputs.version }}/
-          
+
           # Create tar.gz archive
           tar -czf lt-frontend-${{ steps.version.outputs.version }}.tar.gz lt-frontend-${{ steps.version.outputs.version }}/
-          
+
           # Create zip archive
           zip -r lt-frontend-${{ steps.version.outputs.version }}.zip lt-frontend-${{ steps.version.outputs.version }}/
-          
+
           # Clean up temporary directory
           rm -rf lt-frontend-${{ steps.version.outputs.version }}/
 
