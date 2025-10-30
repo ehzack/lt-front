@@ -430,7 +430,6 @@ function App() {
             </Snackbar>
           </Box>
           {loadingProps?.isLoading ? <Spinner /> : <></>}
-
           {routes}
         </div>
       )}
