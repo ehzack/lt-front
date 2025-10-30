@@ -129,8 +129,8 @@ jobs:
         run: |
           CURRENT_VERSION="${{ steps.current-version.outputs.version }}"
           
-          # Get the latest staging tag number
-          LATEST_STAGING_TAG=$(git tag -l "v*-staging-*" --sort=-version:refname | head -n1 || echo "")
+          # Get the latest staging tag number (only match our new simplified format)
+          LATEST_STAGING_TAG=$(git tag -l "v${CURRENT_VERSION}-staging-[0-9]*" --sort=-version:refname | head -n1 || echo "")
           echo "Debug: Found latest staging tag: '$LATEST_STAGING_TAG'"
           
           if [ -z "$LATEST_STAGING_TAG" ]; then
