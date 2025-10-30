@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/ehzack/lt-front/compare/v1.0.1...v1.0.2) (2025-10-30)
+
+
+### Bug Fixes
+
+* improve staging tag number extraction with simpler regex ([1cae2bc](https://github.com/ehzack/lt-front/commit/1cae2bcd684b17930b5cbe39137ece1e8367937a))
+* update staging release workflow to find correct simplified tags ([72ae4f4](https://github.com/ehzack/lt-front/commit/72ae4f4cf4a7a4a86fa62293ca87ba9fb0798b3f))
+* use specific pattern to match only new simplified staging tags ([7861f18](https://github.com/ehzack/lt-front/commit/7861f18f6260e784d5205b4e53232a4c9ef847aa))
+
 ## [1.0.1](https://github.com/ehzack/lt-front/compare/v1.0.0...v1.0.1) (2025-10-30)
 
 
