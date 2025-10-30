@@ -149,7 +149,13 @@ jobs:
                   "npmPublish": false
                 }
               ],
-              "@semantic-release/github",
+              [
+                "@semantic-release/github",
+                {
+                  "releasedLabels": false,
+                  "addReleases": false
+                }
+              ],
               [
                 "@semantic-release/git",
                 {
@@ -166,3 +172,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      
+      - name: Extract new version and create tag
+        run: |
+          # Get the version from package.json after semantic-release
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "New version: $NEW_VERSION"
+          
+          # Create and push the version tag to trigger production-release workflow
+          git tag "v$NEW_VERSION"
+          git push origin "v$NEW_VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
