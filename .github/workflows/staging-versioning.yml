@@ -137,7 +137,7 @@ jobs:
             STAGING_NUMBER=1
           else
             # Extract the number from the latest tag (e.g., v1.0.0-staging-5 -> 5)
-            STAGING_NUMBER=$(echo "$LATEST_STAGING_TAG" | sed -n 's/.*-staging-\([0-9]\+\)$/\1/p')
+            STAGING_NUMBER=$(echo "$LATEST_STAGING_TAG" | grep -o '[0-9]\+$')
             if [ -z "$STAGING_NUMBER" ]; then
               STAGING_NUMBER=1
             else
