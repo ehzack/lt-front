@@ -25,7 +25,7 @@ import { updateToken } from "./modules/balisage/state/authorizationActions";
 import { Box, Snackbar, Alert } from "@mui/material";
 import Forbidden from "./routing/Forbidden";
 import Electricite from "./modules/electricite/ui/Electricite";
-import axios from 'axios';
+import axios from "axios";
 import config from "./common/Config";
 import ForbiddenComponent from "./routing/ForbiddenComponent";
 
@@ -59,7 +59,7 @@ const protectedRoutes = {
     path: "/Macros",
     requiredRoles: [roles.ROLE_ADMIN],
     component: Macro,
-  }
+  },
 };
 
 let isAuthenticated = sessionStorage.getItem("token"); // state managed with authentication module
@@ -111,60 +111,52 @@ function App() {
 
   // Separate useEffect for socket listeners
   useEffect(() => {
-    socket.on('ElectricityStatus', (message) => {
+    socket.on("ElectricityStatus", (message) => {
       dispatch(electricityActions.getElecUpdate(message));
     });
 
-    socket.on('ElecAlarme', (message) => {
+    socket.on("ElecAlarme", (message) => {
       dispatch(electricityActions.getAlarmesUpdate(message));
     });
 
-
-    socket.on('Gasoline', (message) => {
+    socket.on("Gasoline", (message) => {
       dispatch(electricityActions.getGasolineUpdate(message));
     });
 
-    socket.on('Normal_source', (message) => {
+    socket.on("Normal_source", (message) => {
       dispatch(electricityActions.getNormaleSourceUpdate(message));
     });
 
-    socket.on('ipStatus', (message) => {
+    socket.on("ipStatus", (message) => {
       dispatch(communicationActions.getIpStatusUpdate(message));
     });
 
-
-    socket.on('AlarmeMSG', (message) => {
+    socket.on("AlarmeMSG", (message) => {
       dispatch(actionsZones.getAlarmeUpdate(message));
     });
 
-    socket.on('EquipStatus', (message) => {
+    socket.on("EquipStatus", (message) => {
       dispatch(actionsZones.getIpStatusUpdate(message));
     });
 
-    socket.on('H_M', (message) => {
+    socket.on("H_M", (message) => {
       dispatch(actionsZones.getMarcheUpdate(message));
     });
 
-
-    socket.on('recMessage', (message) => {
+    socket.on("recMessage", (message) => {
       dispatch(actionsZones.getZoneUpdate(message));
     });
-    socket.on('modeTel', (message) => {
+    socket.on("modeTel", (message) => {
       dispatch(actionsZones.getModeTeleUpdate(message));
     });
 
-
-
     const requestCommunicators = {
-      successCallBack: (response) => {
-      },
-      failCallBack: (error) => {
-      },
+      successCallBack: (response) => {},
+      failCallBack: (error) => {},
     };
 
     const requestZone = {
-      successCallBack: (response) => {
-      },
+      successCallBack: (response) => {},
       failCallBack: (error) => {
         setStateSnackBar({
           ...stateSnackBar,
@@ -176,8 +168,7 @@ function App() {
     };
 
     socket.on("connect", () => {
-
-      dispatch(actionsZones.ZoneStart(requestZone))
+      dispatch(actionsZones.ZoneStart(requestZone));
       setStateSnackBar((prevState) => ({
         ...prevState,
         severity: "success",
@@ -186,9 +177,8 @@ function App() {
       }));
     });
 
-    socket.on('reconnect', () => {
-
-      dispatch(actionsZones.ZoneStart(requestZone))
+    socket.on("reconnect", () => {
+      dispatch(actionsZones.ZoneStart(requestZone));
     });
 
     socket.on("disconnect", () => {
@@ -226,21 +216,23 @@ function App() {
       }
     });
 
-    socket.on('automateStatus', (message) => {
-      const isConnected = message.status === true || message.status === 'connected';
+    socket.on("automateStatus", (message) => {
+      const isConnected =
+        message.status === true || message.status === "connected";
 
       setStateSnackBar((prevState) => ({
         ...prevState,
         severity: isConnected ? "success" : "error",
-        message: message.message || (isConnected
-          ? "L'automate est reconnecté"
-          : "L'automate est hors ligne"),
+        message:
+          message.message ||
+          (isConnected
+            ? "L'automate est reconnecté"
+            : "L'automate est hors ligne"),
         openSnackBar: true,
       }));
     });
 
-
-    socket.on('disco', (message) => {
+    socket.on("disco", (message) => {
       dispatch(actionsZones.getDiscoUpdate(message));
     });
 
@@ -255,18 +247,18 @@ function App() {
 
     // Cleanup function to remove socket listeners
     return () => {
-      socket.off('ElectricityStatus');
-      socket.off('ElecAlarme');
-      socket.off('Gasoline');
-      socket.off('Normal_source');
-      socket.off('ipStatus');
-      socket.off('AlarmeMSG');
-      socket.off('connect_error');
-      socket.off('connexion');
-      socket.off('automateStatus');
-      socket.off('disco');
-      socket.off('H_alarme');
-      socket.off('payload');
+      socket.off("ElectricityStatus");
+      socket.off("ElecAlarme");
+      socket.off("Gasoline");
+      socket.off("Normal_source");
+      socket.off("ipStatus");
+      socket.off("AlarmeMSG");
+      socket.off("connect_error");
+      socket.off("connexion");
+      socket.off("automateStatus");
+      socket.off("disco");
+      socket.off("H_alarme");
+      socket.off("payload");
     };
   }, [dispatch]);
 
@@ -307,12 +299,14 @@ function App() {
       },
     };
 
-    dispatch(communicationActions.communicationStart({
-      successCallBack: (response) => {},
-      failCallBack: (error) => {
-        console.log(error);
-      },
-    }));
+    dispatch(
+      communicationActions.communicationStart({
+        successCallBack: (response) => {},
+        failCallBack: (error) => {
+          console.log(error);
+        },
+      })
+    );
     dispatch(electricityActions.alarmeGeneratorStart(alarmeGeneratorRequest));
     dispatch(electricityActions.gasolineStart(gasolineRequest));
     dispatch(electricityActions.normaleSourceStart(normaleSourceRequest));
@@ -323,7 +317,7 @@ function App() {
     if (reason === "clickaway") {
       return;
     }
-    setStateSnackBar(prevState => ({ ...prevState, openSnackBar: false }));
+    setStateSnackBar((prevState) => ({ ...prevState, openSnackBar: false }));
   }, []);
 
   const loadingProps = useMemo(() => {
@@ -343,7 +337,11 @@ function App() {
       <Switch>
         <Route exact path="/eclairage" component={Eclairage} />
         <Route exact path="/balisage" component={Balisage} />
-        <Route exact path="/Etat-de-communication" component={ForbiddenComponent} />
+        <Route
+          exact
+          path="/Etat-de-communication"
+          component={ForbiddenComponent}
+        />
         <Route exact path="/Régulateur" component={ForbiddenComponent} />
         <Route exact path="/Alarmes" component={ForbiddenComponent} />
         <Route
@@ -404,8 +402,6 @@ function App() {
     );
   }
 
-
-
   if (isAllowed === false) {
     routes = (
       <Layout>
@@ -434,10 +430,7 @@ function App() {
             </Snackbar>
           </Box>
           {loadingProps?.isLoading ? <Spinner /> : <></>}
-          {/* Development feature: Version display for testing workflow */}
-          <div style={{position: 'fixed', bottom: '10px', right: '10px', background: '#f0f0f0', padding: '5px', fontSize: '12px', borderRadius: '3px'}}>
-            Dev Feature: v1.0.5+dev
-          </div>
+
           {routes}
         </div>
       )}
